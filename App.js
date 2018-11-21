@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Platform, StatusBar } from 'react-native';
+import { StyleSheet, View, Platform, StatusBar,Alert } from 'react-native';
 import {createBottomTabNavigator, createStackNavigator} from 'react-navigation';
 import WelcomeScreen from "./src/screens/WelcomeScreen";
 import AuthScreen from "./src/screens/AuthScreen";
@@ -8,9 +8,24 @@ import DeckScreen from "./src/screens/DeckScreen";
 import SettingsScreen from "./src/screens/SettingsScreen";
 import ReviewScreen from "./src/screens/ReviewScreen";
 import {Provider} from 'react-redux';
+import Expo, {Notifications} from 'expo'
 import store from './src/store';
+import registerForNotifications from './src/services/push_notification'
 
 export default class App extends React.Component {
+    componentDidMount() {
+        registerForNotifications();
+        Notifications.addListener((notification) => {
+            const { data: { text }, origin } = notification;
+            if (origin === 'received' && text) {
+                Alert.alert(
+                    'New Push Notification',
+                    text,
+                    [{ text: 'Ok.' }]
+                );
+            }
+        });
+    }
   render() {
     const MainNavigator = createBottomTabNavigator({
         welcome: WelcomeScreen,
@@ -22,7 +37,11 @@ export default class App extends React.Component {
                review: ReviewScreen,
                settings: SettingsScreen
            })
-         })
+         }, {
+            tabBarOptions: {
+                labelStyle:{fontSize : 12 }
+            }
+        })
     }, {
         lazy: true,
         navigationOptions: {

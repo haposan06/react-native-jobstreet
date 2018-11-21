@@ -1,5 +1,13 @@
 {
   "expo": {
+    "android": {
+      "package": "com.johannesnap.jobs",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyC36nNiRpoe8eCg_8CG7YJzI33LuOTrg3I"
+        }
+      }
+    },
     "androidStatusBar": {
       "backgroundColor": "#0000FF"
     },

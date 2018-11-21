@@ -5,8 +5,6 @@ import {Facebook} from 'expo';
 
 export const facebookLogin = () => async dispatch => {
     let token = await AsyncStorage.getItem('fb_token');
-    console.log('inside fb login');
-    console.log(token);
     if (token) {
         // Dispatch an action saying FB login is done
         dispatch({ type: FACEBOOK_LOGIN_SUCCESS, payload: token });
